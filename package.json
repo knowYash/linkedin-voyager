@@ -12,7 +12,8 @@
     "lint": "yarn eslint . --ext .ts,.tsx",
     "test": "mocha -r ts-node/register test/**",
     "prettier": "prettier  --single-quote --trailing-comma all --write .",
-    "start": "yarn build && node dist/index.node.js"
+    "start": "yarn build && node dist/index.node.js",
+    "prepare": "yarn build"
   },
   "dependencies": {
     "child_process": "^1.0.2",
