@@ -18,12 +18,19 @@ import { listenToPing } from '../realtime/listen_ping';
 import {
   ConversationDetails,
   MessageDetails,
+  Profile,
+  ProfileUpdate,
   SeenDetails,
   UrnId,
   UserDetails,
 } from '../model/api';
 import { getConversation, listConversations } from '../messaging/conversations';
 import { listenForErrors } from '../realtime/listen_error';
+import {
+  getProfile,
+  getProfileUpdates,
+  GetProfileUpdatesOptions,
+} from '../identity/profile_updates';
 
 // TODO: better logging scheme
 
@@ -37,6 +44,14 @@ export class BaseAPI {
   setPassword(password: string): void {
     this.session = new Session(this.username, password, this.config);
   }
+
+  public identity = {
+    profile: async (publicId: UrnId): Promise<Profile> =>
+      getProfile(this.session, publicId),
+    profileUpdates: async (
+      options: GetProfileUpdatesOptions,
+    ): Promise<ProfileUpdate[]> => getProfileUpdates(this.session, options),
+  };
 
   public messaging = {
     sendToConversation: (

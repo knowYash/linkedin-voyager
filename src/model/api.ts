@@ -54,6 +54,16 @@ export interface ConversationDetails {
   participants: UserDetails[];
 }
 
+export interface Profile {
+  profileUrn: string;
+}
+
+export interface ProfileUpdate {
+  updateUrn: Urn;
+  text?: string;
+  resharedText?: string;
+}
+
 export const convertUrnToId = (urn: Urn): UrnId => {
   return urn.match(extractIdFromUrn).groups.urnId;
 };
