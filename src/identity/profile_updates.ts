@@ -21,12 +21,13 @@ export interface GetProfileUpdatesOptions {
   publicId?: string;
   count?: number;
   start?: number;
+  paginationToken?: string;
 }
 
 export const getProfileUpdates = async (
   session: Session,
   options: GetProfileUpdatesOptions,
-): Promise<ProfileUpdate[] | null> => {
+): Promise<{ results: ProfileUpdate[]; paginationToken?: string } | null> => {
   if (!options.urn && !options.publicId) return null;
 
   const urn =
@@ -38,6 +39,9 @@ export const getProfileUpdates = async (
     moduleKey: 'member-shares:phone',
     includeLongTermHistory: true,
     profileUrn: urn,
+    ...(options.paginationToken && {
+      paginationToken: options.paginationToken,
+    }),
   };
 
   const result = await session.fetch(

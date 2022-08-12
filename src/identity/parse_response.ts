@@ -46,16 +46,18 @@ export const parseProfileUpdate = (
 };
 
 interface RawProfileUpdatesContainer {
-  metadata?: Record<string, unknown>;
+  metadata?: { paginationToken: string };
   elements?: RawProfileUpdate[];
   paging?: Record<string, unknown>;
 }
 
 export const parseProfileUpdates = (
   data: unknown | null,
-): ProfileUpdate[] | null => {
-  const output = (data as RawProfileUpdatesContainer)?.elements.map((el) =>
-    parseProfileUpdate(el),
+): { results: ProfileUpdate[]; paginationToken?: string } | null => {
+  const results = (data as RawProfileUpdatesContainer)?.elements.map(
+    parseProfileUpdate,
   );
-  return output;
+  const paginationToken = (data as RawProfileUpdatesContainer)?.metadata
+    .paginationToken;
+  return { results, paginationToken };
 };

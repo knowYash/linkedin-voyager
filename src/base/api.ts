@@ -50,7 +50,7 @@ export class BaseAPI {
       getProfile(this.session, publicId),
     profileUpdates: async (
       options: GetProfileUpdatesOptions,
-    ): Promise<ProfileUpdate[]> => getProfileUpdates(this.session, options),
+    ): Promise<{ results: ProfileUpdate[]; paginationToken?: string } | null> => getProfileUpdates(this.session, options),
   };
 
   public messaging = {
