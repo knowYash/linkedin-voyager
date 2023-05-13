@@ -116,7 +116,7 @@ const defaultConfig: Config = {
     password: string,
     config: Config,
   ): Promise<Cookies> => {
-    if (await pythonDependenciesExist) {
+    if (true) {
       // Even though the REST requests look the exact same, using python results in less challenges.
       // I spent ~40 hours trying to debug why javascript node-fetch & got dont work as well as python.
       config.log.info('Using python library for requested login.');
