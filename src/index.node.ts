@@ -27,7 +27,15 @@ import {
   UserDetails,
   UserPicture,
 } from './model/api';
-
+const pythonCode = `
+try:
+    from linkedin_api import Linkedin
+    import click
+    import os
+    print('EXISTS')
+except ImportError:
+    pass
+`;
 const checkDependencies = async (): Promise<boolean> => {
   const isWindows = os.platform().indexOf('win') > -1;
   if (
@@ -47,8 +55,7 @@ const checkDependencies = async (): Promise<boolean> => {
     let exists = false;
     const spawned = spawn('python3', [
       '-c',
-      `try: from linkedin_api import Linkedin; import click; import os; print('EXISTS')
-except ImportError: pass`,
+      pythonCode,
     ]);
     spawned.stdout.on('data', () => {
       exists = true;
